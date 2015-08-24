@@ -28,6 +28,11 @@ Custom transition & interactive transition animator for iOS written in Swift.
 ![capture_ARNModalTransition](ARNModalTransition.gif "capture_ARNModalTransition")
 
 
+### [GooglePlayTransition](https://github.com/xxxAIRINxxx/GooglePlayTransition)
+
+![capture_GooglePlayTransition](GooglePlayTransition.gif "capture_GooglePlayTransition")
+
+
 ## License
 
 SoundCloudTransition is available under the MIT license. See the LICENSE file for more info.
