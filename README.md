@@ -35,4 +35,4 @@ Custom transition & interactive transition animator for iOS written in Swift.
 
 ## License
 
-SoundCloudTransition is available under the MIT license. See the LICENSE file for more info.
+MIT license. See the LICENSE file for more info.
