@@ -33,6 +33,11 @@ Custom transition & interactive transition animator for iOS written in Swift.
 ![capture_GooglePlayTransition](GooglePlayTransition.gif "capture_GooglePlayTransition")
 
 
+### [ARNInteractiveTransition](https://github.com/xxxAIRINxxx/ARNInteractiveTransition)
+
+![capture_ARNInteractiveTransition](ARNInteractiveTransition.gif "capture_ARNInteractiveTransition")
+
+
 ## License
 
 MIT license. See the LICENSE file for more info.
