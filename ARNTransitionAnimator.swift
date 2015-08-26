@@ -242,7 +242,11 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
                 animationRatio = (location.x - self.panLocationStart) / CGRectGetWidth(bounds)
             }
             
-            if self.contentScrollView != nil && animationRatio <= 0 {
+            if animationRatio < 0 {
+                animationRatio = 0
+            }
+            
+            if self.contentScrollView != nil && animationRatio < 0 {
                 self.startGestureTransition()
                 self.contentScrollView!.bounces = false
             } else {
