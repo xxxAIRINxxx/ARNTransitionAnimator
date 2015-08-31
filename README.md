@@ -37,6 +37,9 @@ Custom transition & interactive transition animator for iOS written in Swift.
 
 ![capture_ARNInteractiveTransition](ARNInteractiveTransition.gif "capture_ARNInteractiveTransition")
 
+### [MusicPlayerTransition](https://github.com/xxxAIRINxxx/MusicPlayerTransition)
+![capture_MusicPlayerTransition](MusicPlayerTransition.gif "capture_MusicPlayerTransition")
+
 
 ## License
 
