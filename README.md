@@ -2,14 +2,14 @@
 
 [![Language: Swift](https://img.shields.io/badge/lang-Swift-yellow.svg?style=flat)](https://developer.apple.com/swift/)
 
-Custom transition & interactive transition animator for iOS written in Swift.
+Custom transition & interactive transition animator for iOS. written in Swift.
 
 
 ## Requirements
 
-* Xcode 6.4
-* iOS 7.1+
-* Swift 1.2
+* Xcode 7.0
+* iOS 8.1+
+* Swift 2.0
 
 ## Use Example
 
