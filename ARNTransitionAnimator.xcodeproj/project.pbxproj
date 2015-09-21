@@ -55,7 +55,7 @@
 		918B730C1BAFDBB90030A449 = {
 			isa = PBXGroup;
 			children = (
-				918B73181BAFDBB90030A449 /* ARNTransitionAnimator */,
+				918B73181BAFDBB90030A449 /* Source */,
 				918B73241BAFDBBE0030A449 /* ARNTransitionAnimatorTests */,
 				918B73171BAFDBB90030A449 /* Products */,
 			);
@@ -70,14 +70,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		918B73181BAFDBB90030A449 /* ARNTransitionAnimator */ = {
+		918B73181BAFDBB90030A449 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				918B73191BAFDBBC0030A449 /* ARNTransitionAnimator.h */,
 				918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */,
 				918B731B1BAFDBBE0030A449 /* Info.plist */,
 			);
-			path = ARNTransitionAnimator;
+			path = Source;
 			sourceTree = "<group>";
 		};
 		918B73241BAFDBBE0030A449 /* ARNTransitionAnimatorTests */ = {
@@ -317,7 +317,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = ARNTransitionAnimator/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.ARNTransitionAnimator;
@@ -335,7 +335,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = ARNTransitionAnimator/Info.plist;
+				INFOPLIST_FILE = Source/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.ARNTransitionAnimator;
