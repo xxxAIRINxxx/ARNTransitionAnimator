@@ -34,7 +34,7 @@ To integrate ARNTransitionAnimator into your Xcode project using Carthage, speci
 
 ```
 
-github "ARNTransitionAnimator/ARNTransitionAnimator"
+github "xxxAIRINxxx/ARNTransitionAnimator"
 
 ```
 
