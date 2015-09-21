@@ -1,0 +1,10 @@
+framework module ARNTransitionAnimator {
+  umbrella header "ARNTransitionAnimator.h"
+
+  export *
+  module * { export * }
+}
+
+module ARNTransitionAnimator.Swift {
+    header "ARNTransitionAnimator-Swift.h"
+}

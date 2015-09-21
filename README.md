@@ -28,6 +28,16 @@ pod "ARNTransitionAnimator"
 
 ```
 
+### Carthage
+
+To integrate ARNTransitionAnimator into your Xcode project using Carthage, specify it in your Cartfile:
+
+```
+
+github "ARNTransitionAnimator/ARNTransitionAnimator"
+
+```
+
 
 ## Use Example
 
