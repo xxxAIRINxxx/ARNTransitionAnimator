@@ -31,6 +31,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     public var usingSpringWithDamping : CGFloat = 1.0
     public var transitionDuration : NSTimeInterval = 0.5
     public var initialSpringVelocity : CGFloat = 0.1
+    public var useKeyframeAnimation : Bool = false
     
     // interactive gesture
     
@@ -167,22 +168,39 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     }
     
     private func animateWithDuration(duration: NSTimeInterval, containerView: UIView, completeTransition: Bool, completion: (() -> Void)?) {
-        UIView.animateWithDuration(
-            duration,
-            delay: 0,
-            usingSpringWithDamping: self.usingSpringWithDamping,
-            initialSpringVelocity: self.initialSpringVelocity,
-            options: .CurveEaseOut,
-            animations: {
-                if completeTransition {
-                    self.fireAnimationHandler(containerView, percentComplete: 1.0)
-                } else {
-                    self.fireCancelAnimationHandler(containerView)
-                }
-            }, completion: { finished in
-                self.fireCompletionHandler(containerView, completeTransition: completeTransition)
-                completion?()
-        })
+        if !self.useKeyframeAnimation {
+            UIView.animateWithDuration(
+                duration,
+                delay: 0,
+                usingSpringWithDamping: self.usingSpringWithDamping,
+                initialSpringVelocity: self.initialSpringVelocity,
+                options: .CurveEaseOut,
+                animations: {
+                    if completeTransition {
+                        self.fireAnimationHandler(containerView, percentComplete: 1.0)
+                    } else {
+                        self.fireCancelAnimationHandler(containerView)
+                    }
+                }, completion: { finished in
+                    self.fireCompletionHandler(containerView, completeTransition: completeTransition)
+                    completion?()
+            })
+        } else {
+            UIView.animateKeyframesWithDuration(
+                duration,
+                delay: 0.0,
+                options: .BeginFromCurrentState,
+                animations: {
+                    if completeTransition {
+                        self.fireAnimationHandler(containerView, percentComplete: 1.0)
+                    } else {
+                        self.fireCancelAnimationHandler(containerView)
+                    }
+                }, completion: { finished in
+                    self.fireCompletionHandler(containerView, completeTransition: completeTransition)
+                    completion?()
+            })
+        }
     }
     
     // MARK: Gesture
