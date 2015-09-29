@@ -2,7 +2,7 @@
 
 [![Swift 2.0](https://img.shields.io/badge/Swift-2.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
-
+[![Xcode 7.0+](https://img.shields.io/badge/Xcode-7.0+-blue.svg?style=flat)](https://developer.apple.com/swift/)
 
 Custom transition & interactive transition animator for iOS. written in Swift.
 
