@@ -223,12 +223,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         velocity = CGPointApplyAffineTransform(velocity, CGAffineTransformInvert(recognizer.view!.transform))
         
         if recognizer.state == .Began {
-            switch (self.direction) {
-            case .Top, .Bottom:
-                self.panLocationStart = location.y
-            case .Left, .Right:
-                self.panLocationStart = location.x
-            }
+            self.setPanStartPoint(location)
             
             if let _contentScrollView = self.contentScrollView {
                 if _contentScrollView.contentOffset.y <= 0.0 {
@@ -263,6 +258,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
             
             if let _contentScrollView = self.contentScrollView {
                 if self.isTransitioning == false && _contentScrollView.contentOffset.y <= 0 {
+                    self.setPanStartPoint(location)
                     self.startGestureTransition()
                 } else {
                     self.updateInteractiveTransition(animationRatio)
@@ -316,6 +312,15 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     
     func resetGestureTransitionSetting() {
         self.isTransitioning = false
+    }
+    
+    private func setPanStartPoint(location: CGPoint) {
+        switch (self.direction) {
+        case .Top, .Bottom:
+            self.panLocationStart = location.y
+        case .Left, .Right:
+            self.panLocationStart = location.x
+        }
     }
 }
 
