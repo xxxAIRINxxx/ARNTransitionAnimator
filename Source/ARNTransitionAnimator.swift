@@ -26,14 +26,14 @@ public enum ARNTransitionAnimatorOperation: Int {
 
 public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     
-    // animation setting
+    // Animation Settings
     
     public var usingSpringWithDamping : CGFloat = 1.0
     public var transitionDuration : NSTimeInterval = 0.5
     public var initialSpringVelocity : CGFloat = 0.1
     public var useKeyframeAnimation : Bool = false
     
-    // interactive gesture
+    // Interactive Transition Gesture
     
     public weak var gestureTargetView : UIView? {
         willSet {
@@ -56,7 +56,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     
-    // handlers
+    // Handlers
     
     public var presentationBeforeHandler : ((containerView: UIView, transitionContext: UIViewControllerContextTransitioning) ->())?
     public var presentationAnimationHandler : ((containerView: UIView, percentComplete: CGFloat) ->())?
@@ -68,7 +68,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     public var dismissalCancelAnimationHandler : ((containerView: UIView) ->())?
     public var dismissalCompletionHandler : ((containerView: UIView, completeTransition: Bool) ->())?
     
-    // private
+    // Private
     
     private weak var fromVC : UIViewController!
     private weak var toVC : UIViewController!
@@ -85,7 +85,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         self.unregisterPanGesture()
     }
     
-    // MARK: Constructor
+    // MARK: - Constructor
     
     public init(operationType: ARNTransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) {
         self.operationType = operationType
@@ -102,7 +102,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     
-    // MARK: Private Methods
+    // MARK: - Private Functions
     
     private func registerPanGesture() {
         self.unregisterPanGesture()
@@ -171,7 +171,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         if !self.useKeyframeAnimation {
             UIView.animateWithDuration(
                 duration,
-                delay: 0,
+                delay: 0.0,
                 usingSpringWithDamping: self.usingSpringWithDamping,
                 initialSpringVelocity: self.initialSpringVelocity,
                 options: .CurveEaseOut,
@@ -203,9 +203,13 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     
-    // MARK: Gesture
+}
+
+// MARK: - Interactive Transition Gesture
+
+extension ARNTransitionAnimator {
     
-    func handlePan(recognizer: UIPanGestureRecognizer) {
+    internal func handlePan(recognizer: UIPanGestureRecognizer) {
         var window : UIWindow? = nil
         
         switch (self.interactiveType) {
@@ -292,7 +296,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     
-    func startGestureTransition() {
+    private func startGestureTransition() {
         if self.isTransitioning == false {
             self.isTransitioning = true
             switch (self.interactiveType) {
@@ -310,7 +314,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     
-    func resetGestureTransitionSetting() {
+    private func resetGestureTransitionSetting() {
         self.isTransitioning = false
     }
     
@@ -324,7 +328,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     }
 }
 
-// MARK: UIViewControllerAnimatedTransitioning
+// MARK: - UIViewControllerAnimatedTransitioning
 
 extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
     
@@ -351,7 +355,7 @@ extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
     }
 }
 
-// MARK: UIViewControllerTransitioningDelegate
+// MARK: - UIViewControllerTransitioningDelegate
 
 extension ARNTransitionAnimator: UIViewControllerTransitioningDelegate {
     
@@ -382,7 +386,7 @@ extension ARNTransitionAnimator: UIViewControllerTransitioningDelegate {
     }
 }
 
-// MARK: UIViewControllerInteractiveTransitioning
+// MARK: - UIViewControllerInteractiveTransitioning
 
 extension ARNTransitionAnimator {
     
@@ -404,7 +408,7 @@ extension ARNTransitionAnimator {
     }
 }
 
-// MARK: UIPercentDrivenInteractiveTransition
+// MARK: - UIPercentDrivenInteractiveTransition
 
 extension ARNTransitionAnimator {
     
@@ -443,7 +447,7 @@ extension ARNTransitionAnimator {
     }
 }
 
-// MARK: UIGestureRecognizerDelegate
+// MARK: - UIGestureRecognizerDelegate
 
 extension ARNTransitionAnimator: UIGestureRecognizerDelegate {
     
