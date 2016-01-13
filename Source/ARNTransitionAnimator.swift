@@ -232,7 +232,6 @@ extension ARNTransitionAnimator {
             if let _contentScrollView = self.contentScrollView {
                 if _contentScrollView.contentOffset.y <= 0.0 {
                     self.startGestureTransition()
-                    _contentScrollView.bounces = false
                 }
             } else {
                 self.startGestureTransition()
