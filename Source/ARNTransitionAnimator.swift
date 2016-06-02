@@ -237,7 +237,7 @@ extension ARNTransitionAnimator {
                 self.startGestureTransition()
             }
         } else if recognizer.state == .Changed {
-            var bounds = CGRectZero
+            var bounds = CGRect.zero
             switch (self.interactiveType) {
             case .Push, .Present:
                 bounds = self.fromVC.view.bounds
@@ -250,13 +250,13 @@ extension ARNTransitionAnimator {
             var animationRatio: CGFloat = 0.0
             switch self.direction {
             case .Top:
-                animationRatio = (self.panLocationStart - location.y) / CGRectGetHeight(bounds)
+                animationRatio = (self.panLocationStart - location.y) / bounds.height
             case .Bottom:
-                animationRatio = (location.y - self.panLocationStart) / CGRectGetHeight(bounds)
+                animationRatio = (location.y - self.panLocationStart) / bounds.height
             case .Left:
-                animationRatio = (self.panLocationStart - location.x) / CGRectGetWidth(bounds)
+                animationRatio = (self.panLocationStart - location.x) / bounds.width
             case .Right:
-                animationRatio = (location.x - self.panLocationStart) / CGRectGetWidth(bounds)
+                animationRatio = (location.x - self.panLocationStart) / bounds.width
             }
             
             if let _contentScrollView = self.contentScrollView {
