@@ -92,7 +92,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         self.fromVC = fromVC
         self.toVC = toVC
         
-        switch (self.operationType) {
+        switch self.operationType {
         case .Push, .Present:
             self.isPresenting = true
         case .Pop, .Dismiss:
@@ -114,7 +114,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         if let _gestureTargetView = self.gestureTargetView {
             _gestureTargetView.addGestureRecognizer(self.gesture!)
         } else {
-            switch (self.interactiveType) {
+            switch self.interactiveType {
             case .Push, .Present:
                 self.fromVC.view.addGestureRecognizer(self.gesture!)
             case .Pop, .Dismiss:
@@ -210,9 +210,8 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
 extension ARNTransitionAnimator {
     
     internal func handlePan(recognizer: UIPanGestureRecognizer) {
-        var window : UIWindow? = nil
-        
-        switch (self.interactiveType) {
+        let window : UIWindow?
+        switch self.interactiveType {
         case .Push, .Present:
             window = self.fromVC.view.window
         case .Pop, .Dismiss:
@@ -229,16 +228,14 @@ extension ARNTransitionAnimator {
         if recognizer.state == .Began {
             self.setPanStartPoint(location)
             
-            if let _contentScrollView = self.contentScrollView {
-                if _contentScrollView.contentOffset.y <= 0.0 {
-                    self.startGestureTransition()
-                }
+            if let c = self.contentScrollView where c.contentOffset.y <= 0.0 {
+                self.startGestureTransition()
             } else {
                 self.startGestureTransition()
             }
         } else if recognizer.state == .Changed {
             var bounds = CGRect.zero
-            switch (self.interactiveType) {
+            switch self.interactiveType {
             case .Push, .Present:
                 bounds = self.fromVC.view.bounds
             case .Pop, .Dismiss:
@@ -271,7 +268,7 @@ extension ARNTransitionAnimator {
             }
         } else if recognizer.state == .Ended {
             var velocityForSelectedDirection: CGFloat = 0.0
-            switch (self.direction) {
+            switch self.direction {
             case .Top, .Bottom:
                 velocityForSelectedDirection = velocity.y
             case .Left, .Right:
@@ -318,7 +315,7 @@ extension ARNTransitionAnimator {
     }
     
     private func setPanStartPoint(location: CGPoint) {
-        switch (self.direction) {
+        switch self.direction {
         case .Top, .Bottom:
             self.panLocationStart = location.y
         case .Left, .Right:
@@ -393,7 +390,7 @@ extension ARNTransitionAnimator {
         let containerView = transitionContext.containerView()
         
         // FIXME : UINavigationController not called animator UIViewControllerTransitioningDelegate
-        switch (self.interactiveType) {
+        switch self.interactiveType {
         case .Push, .Present:
             self.isPresenting = true
         case .Pop, .Dismiss:
