@@ -107,7 +107,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     private func registerPanGesture() {
         self.unregisterPanGesture()
         
-        self.gesture = UIPanGestureRecognizer(target: self, action: "handlePan:")
+        self.gesture = UIPanGestureRecognizer(target: self, action: #selector(ARNTransitionAnimator.handlePan(_:)))
         self.gesture!.delegate = self
         self.gesture!.maximumNumberOfTouches = 1
         
