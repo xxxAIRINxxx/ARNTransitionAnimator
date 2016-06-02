@@ -9,14 +9,14 @@
 import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
-public enum ARNTransitionAnimatorDirection: Int {
+public enum DirectionType {
     case Top
     case Bottom
     case Left
     case Right
 }
 
-public enum ARNTransitionAnimatorOperation: Int {
+public enum OperationType {
     case None
     case Push
     case Pop
@@ -44,9 +44,9 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         }
     }
     public var panCompletionThreshold : CGFloat = 100.0
-    public var direction : ARNTransitionAnimatorDirection = .Bottom
+    public var direction : DirectionType = .Bottom
     public var contentScrollView : UIScrollView?
-    public var interactiveType : ARNTransitionAnimatorOperation = .None {
+    public var interactiveType : OperationType = .None {
         didSet {
             if self.interactiveType == .None {
                 self.unregisterPanGesture()
@@ -73,7 +73,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     private weak var fromVC : UIViewController!
     private weak var toVC : UIViewController!
     
-    private(set) var operationType : ARNTransitionAnimatorOperation
+    private(set) var operationType : OperationType
     private(set) var isPresenting : Bool = true
     private(set) var isTransitioning : Bool = false
     
@@ -87,7 +87,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     
     // MARK: - Constructor
     
-    public init(operationType: ARNTransitionAnimatorOperation, fromVC: UIViewController, toVC: UIViewController) {
+    public init(operationType: OperationType, fromVC: UIViewController, toVC: UIViewController) {
         self.operationType = operationType
         self.fromVC = fromVC
         self.toVC = toVC
