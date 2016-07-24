@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		918B731A1BAFDBBC0030A449 /* ARNTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 918B73191BAFDBBC0030A449 /* ARNTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		918B73211BAFDBBE0030A449 /* ARNTransitionAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918B73161BAFDBB90030A449 /* ARNTransitionAnimator.framework */; settings = {ASSET_TAGS = (); }; };
+		918B73211BAFDBBE0030A449 /* ARNTransitionAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918B73161BAFDBB90030A449 /* ARNTransitionAnimator.framework */; };
 		918B73261BAFDBC00030A449 /* ARNTransitionAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73251BAFDBC00030A449 /* ARNTransitionAnimatorTests.swift */; };
-		918B73311BAFDC030030A449 /* ARNTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */; settings = {ASSET_TAGS = (); }; };
+		918B73311BAFDC030030A449 /* ARNTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +77,8 @@
 				918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */,
 				918B731B1BAFDBBE0030A449 /* Info.plist */,
 			);
-			path = Source;
+			name = Source;
+			path = ../Source;
 			sourceTree = "<group>";
 		};
 		918B73241BAFDBBE0030A449 /* ARNTransitionAnimatorTests */ = {
@@ -317,7 +318,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/../Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.ARNTransitionAnimator;
@@ -335,7 +336,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Source/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/../Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.ARNTransitionAnimator;

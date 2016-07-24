@@ -24,7 +24,7 @@ public enum OperationType {
     case Dismiss
 }
 
-public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
+public class ARNTransitionAnimator<From: UIViewController, To: UIViewController> : UIPercentDrivenInteractiveTransition {
     
     // Animation Settings
     
@@ -70,8 +70,8 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     
     // Private
     
-    private weak var fromVC : UIViewController!
-    private weak var toVC : UIViewController!
+    private weak var fromVC : From!
+    private weak var toVC : To!
     
     private(set) var operationType : OperationType
     private(set) var isPresenting : Bool = true
@@ -87,7 +87,7 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     
     // MARK: - Constructor
     
-    public init(operationType: OperationType, fromVC: UIViewController, toVC: UIViewController) {
+    public init(operationType: OperationType, fromVC: From, toVC: To) {
         self.operationType = operationType
         self.fromVC = fromVC
         self.toVC = toVC
@@ -100,6 +100,8 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
         case .None:
             break
         }
+        
+        super.init()
     }
     
     // MARK: - Private Functions
@@ -126,12 +128,12 @@ public class ARNTransitionAnimator: UIPercentDrivenInteractiveTransition {
     }
     
     private func unregisterPanGesture() {
-        if let _gesture = self.gesture {
-            if let _view = _gesture.view {
-                _view.removeGestureRecognizer(_gesture)
-            }
-            _gesture.delegate = nil
+        guard let _gesture = self.gesture else { return }
+        
+        if let _view = _gesture.view {
+            _view.removeGestureRecognizer(_gesture)
         }
+        _gesture.delegate = nil
         self.gesture = nil
     }
     
@@ -346,7 +348,7 @@ extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
         }
     }
     
-    public func animationEnded(transitionCompleted: Bool) {
+    @objc public func animationEnded(transitionCompleted: Bool) {
         self.transitionContext = nil
     }
 }
@@ -355,7 +357,7 @@ extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
 
 extension ARNTransitionAnimator: UIViewControllerTransitioningDelegate {
     
-    public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    @objc public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.isPresenting = true
         return self
     }
