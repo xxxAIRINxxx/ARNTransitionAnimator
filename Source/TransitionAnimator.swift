@@ -1,5 +1,5 @@
 //
-//  ARNTransitionAnimator.swift
+//  TransitionAnimator.swift
 //  ARNTransitionAnimator
 //
 //  Created by xxxAIRINxxx on 2015/02/26.
@@ -24,7 +24,7 @@ public enum OperationType {
     case Dismiss
 }
 
-public class ARNTransitionAnimator<From: UIViewController, To: UIViewController> : UIPercentDrivenInteractiveTransition {
+public class TransitionAnimator<From: UIViewController, To: UIViewController> : UIPercentDrivenInteractiveTransition {
     
     // Animation Settings
     
@@ -36,12 +36,8 @@ public class ARNTransitionAnimator<From: UIViewController, To: UIViewController>
     // Interactive Transition Gesture
     
     public weak var gestureTargetView : UIView? {
-        willSet {
-            self.unregisterPanGesture()
-        }
-        didSet {
-            self.registerPanGesture()
-        }
+        willSet { self.unregisterPanGesture() }
+        didSet { self.registerPanGesture() }
     }
     public var panCompletionThreshold : CGFloat = 100.0
     public var direction : DirectionType = .Bottom
@@ -109,7 +105,7 @@ public class ARNTransitionAnimator<From: UIViewController, To: UIViewController>
     private func registerPanGesture() {
         self.unregisterPanGesture()
         
-        self.gesture = UIPanGestureRecognizer(target: self, action: #selector(ARNTransitionAnimator.handlePan(_:)))
+        self.gesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePan(_:)))
         self.gesture!.delegate = self
         self.gesture!.maximumNumberOfTouches = 1
         
@@ -129,10 +125,8 @@ public class ARNTransitionAnimator<From: UIViewController, To: UIViewController>
     
     private func unregisterPanGesture() {
         guard let _gesture = self.gesture else { return }
+        _gesture.view?.removeGestureRecognizer(_gesture)
         
-        if let _view = _gesture.view {
-            _view.removeGestureRecognizer(_gesture)
-        }
         _gesture.delegate = nil
         self.gesture = nil
     }
@@ -209,7 +203,7 @@ public class ARNTransitionAnimator<From: UIViewController, To: UIViewController>
 
 // MARK: - Interactive Transition Gesture
 
-extension ARNTransitionAnimator {
+extension TransitionAnimator {
     
     internal func handlePan(recognizer: UIPanGestureRecognizer) {
         let window : UIWindow?
@@ -328,7 +322,7 @@ extension ARNTransitionAnimator {
 
 // MARK: - UIViewControllerAnimatedTransitioning
 
-extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
+extension TransitionAnimator: UIViewControllerAnimatedTransitioning {
     
     public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
         return self.transitionDuration
@@ -355,7 +349,7 @@ extension ARNTransitionAnimator: UIViewControllerAnimatedTransitioning {
 
 // MARK: - UIViewControllerTransitioningDelegate
 
-extension ARNTransitionAnimator: UIViewControllerTransitioningDelegate {
+extension TransitionAnimator: UIViewControllerTransitioningDelegate {
     
     @objc public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         self.isPresenting = true
@@ -386,7 +380,7 @@ extension ARNTransitionAnimator: UIViewControllerTransitioningDelegate {
 
 // MARK: - UIViewControllerInteractiveTransitioning
 
-extension ARNTransitionAnimator {
+extension TransitionAnimator {
     
     public override func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView()
@@ -408,7 +402,7 @@ extension ARNTransitionAnimator {
 
 // MARK: - UIPercentDrivenInteractiveTransition
 
-extension ARNTransitionAnimator {
+extension TransitionAnimator {
     
     public override func updateInteractiveTransition(percentComplete: CGFloat) {
         super.updateInteractiveTransition(percentComplete)
@@ -447,7 +441,7 @@ extension ARNTransitionAnimator {
 
 // MARK: - UIGestureRecognizerDelegate
 
-extension ARNTransitionAnimator: UIGestureRecognizerDelegate {
+extension TransitionAnimator: UIGestureRecognizerDelegate {
     
     public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return self.contentScrollView != nil ? true : false
