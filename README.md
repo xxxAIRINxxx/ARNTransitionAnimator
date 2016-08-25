@@ -9,7 +9,7 @@ Custom transition & interactive transition animator for iOS. written in Swift.
 ## Requirements
 
 * Xcode 7.3+
-* iOS 8.0+
+* iOS 9.0+
 * Swift 2.2
 
 ## Installation

@@ -7,14 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		91F493591D098E8600C1DE38 /* ARNTransitionAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91F493581D098E8600C1DE38 /* ARNTransitionAnimator.framework */; };
-		91F4935A1D098E8600C1DE38 /* ARNTransitionAnimator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 91F493581D098E8600C1DE38 /* ARNTransitionAnimator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		912F4B261D6E9C4900B9F808 /* ARNTransitionAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 912F4B231D6E9C1700B9F808 /* ARNTransitionAnimator.framework */; };
+		912F4B271D6E9C4900B9F808 /* ARNTransitionAnimator.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 912F4B231D6E9C1700B9F808 /* ARNTransitionAnimator.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		91FBFB271C5904EA0064E23C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FBFB261C5904EA0064E23C /* AppDelegate.swift */; };
 		91FBFB291C5904EA0064E23C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FBFB281C5904EA0064E23C /* ViewController.swift */; };
 		91FBFB2C1C5904EA0064E23C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91FBFB2A1C5904EA0064E23C /* Main.storyboard */; };
 		91FBFB2E1C5904EA0064E23C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91FBFB2D1C5904EA0064E23C /* Assets.xcassets */; };
 		91FBFB311C5904EA0064E23C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91FBFB2F1C5904EA0064E23C /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		912F4B221D6E9C1700B9F808 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 918B73161BAFDBB90030A449;
+			remoteInfo = ARNTransitionAnimator;
+		};
+		912F4B241D6E9C1700B9F808 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 918B73201BAFDBBE0030A449;
+			remoteInfo = ARNTransitionAnimatorTests;
+		};
+		912F4B281D6E9C4900B9F808 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 918B73151BAFDBB90030A449;
+			remoteInfo = ARNTransitionAnimator;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		91CCB1E11C800A0500B79B59 /* Embed Frameworks */ = {
@@ -23,7 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				91F4935A1D098E8600C1DE38 /* ARNTransitionAnimator.framework in Embed Frameworks */,
+				912F4B271D6E9C4900B9F808 /* ARNTransitionAnimator.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -31,7 +55,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		91F493581D098E8600C1DE38 /* ARNTransitionAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = ARNTransitionAnimator.framework; path = "/Users/Yos/Library/Developer/Xcode/DerivedData/ARNTransitionAnimator-eeuqxwcmkxkplceexwiwpekgtati/Build/Products/Debug-iphoneos/ARNTransitionAnimator.framework"; sourceTree = "<absolute>"; };
+		912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = ARNTransitionAnimator.xcodeproj; sourceTree = "<group>"; };
 		91FBFB231C5904E90064E23C /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91FBFB261C5904EA0064E23C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91FBFB281C5904EA0064E23C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,17 +70,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91F493591D098E8600C1DE38 /* ARNTransitionAnimator.framework in Frameworks */,
+				912F4B261D6E9C4900B9F808 /* ARNTransitionAnimator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		912F4B1E1D6E9C1700B9F808 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				912F4B231D6E9C1700B9F808 /* ARNTransitionAnimator.framework */,
+				912F4B251D6E9C1700B9F808 /* ARNTransitionAnimatorTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		91FBFB1A1C5904E90064E23C = {
 			isa = PBXGroup;
 			children = (
-				91F493581D098E8600C1DE38 /* ARNTransitionAnimator.framework */,
+				912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */,
 				91FBFB251C5904EA0064E23C /* Demo */,
 				91FBFB241C5904E90064E23C /* Products */,
 			);
@@ -98,6 +131,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				912F4B291D6E9C4900B9F808 /* PBXTargetDependency */,
 			);
 			name = Demo;
 			productName = Demo;
@@ -130,12 +164,35 @@
 			mainGroup = 91FBFB1A1C5904E90064E23C;
 			productRefGroup = 91FBFB241C5904E90064E23C /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 912F4B1E1D6E9C1700B9F808 /* Products */;
+					ProjectRef = 912F4B1D1D6E9C1700B9F808 /* ARNTransitionAnimator.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				91FBFB221C5904E90064E23C /* Demo */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		912F4B231D6E9C1700B9F808 /* ARNTransitionAnimator.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ARNTransitionAnimator.framework;
+			remoteRef = 912F4B221D6E9C1700B9F808 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		912F4B251D6E9C1700B9F808 /* ARNTransitionAnimatorTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ARNTransitionAnimatorTests.xctest;
+			remoteRef = 912F4B241D6E9C1700B9F808 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		91FBFB211C5904E90064E23C /* Resources */ = {
@@ -161,6 +218,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		912F4B291D6E9C4900B9F808 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ARNTransitionAnimator;
+			targetProxy = 912F4B281D6E9C4900B9F808 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		91FBFB2A1C5904EA0064E23C /* Main.storyboard */ = {
@@ -273,7 +338,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -290,7 +355,7 @@
 					"$(PROJECT_DIR)/build/Debug-iphoneos",
 				);
 				INFOPLIST_FILE = Demo/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = xxxAIRINxxx.Demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";

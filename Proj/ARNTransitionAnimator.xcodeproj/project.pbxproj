@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		912F4B181D6E8F0100B9F808 /* TransitionGestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F4B171D6E8F0100B9F808 /* TransitionGestureHandler.swift */; };
+		912F4B1A1D6E919F00B9F808 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F4B191D6E919F00B9F808 /* TransitionAnimator.swift */; };
+		912F4B1C1D6E950000B9F808 /* AnimatedTransitioning .swift in Sources */ = {isa = PBXBuildFile; fileRef = 912F4B1B1D6E950000B9F808 /* AnimatedTransitioning .swift */; };
 		918B731A1BAFDBBC0030A449 /* ARNTransitionAnimator.h in Headers */ = {isa = PBXBuildFile; fileRef = 918B73191BAFDBBC0030A449 /* ARNTransitionAnimator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		918B73211BAFDBBE0030A449 /* ARNTransitionAnimator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 918B73161BAFDBB90030A449 /* ARNTransitionAnimator.framework */; };
 		918B73261BAFDBC00030A449 /* ARNTransitionAnimatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73251BAFDBC00030A449 /* ARNTransitionAnimatorTests.swift */; };
-		918B73311BAFDC030030A449 /* TransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73301BAFDC030030A449 /* TransitionAnimator.swift */; };
-		91A6C1F71D4755E4008F3A22 /* Animator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A6C1F61D4755E4008F3A22 /* Animator.swift */; };
-		91A6C1F91D4758A9008F3A22 /* InteractiveAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A6C1F81D4758A9008F3A22 /* InteractiveAnimator.swift */; };
-		91FACB4E1D45FC620095FFDC /* TransitionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91FACB4D1D45FC620095FFDC /* TransitionContext.swift */; };
+		918B73311BAFDC030030A449 /* ARNTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */; };
+		91A6C1F71D4755E4008F3A22 /* TransitionAnimatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A6C1F61D4755E4008F3A22 /* TransitionAnimatable.swift */; };
+		91A6C1F91D4758A9008F3A22 /* InteractiveTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91A6C1F81D4758A9008F3A22 /* InteractiveTransitioning.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,16 +29,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		912F4B171D6E8F0100B9F808 /* TransitionGestureHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionGestureHandler.swift; sourceTree = "<group>"; };
+		912F4B191D6E919F00B9F808 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
+		912F4B1B1D6E950000B9F808 /* AnimatedTransitioning .swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AnimatedTransitioning .swift"; sourceTree = "<group>"; };
 		918B73161BAFDBB90030A449 /* ARNTransitionAnimator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ARNTransitionAnimator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		918B73191BAFDBBC0030A449 /* ARNTransitionAnimator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARNTransitionAnimator.h; sourceTree = "<group>"; };
 		918B731B1BAFDBBE0030A449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		918B73201BAFDBBE0030A449 /* ARNTransitionAnimatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARNTransitionAnimatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		918B73251BAFDBC00030A449 /* ARNTransitionAnimatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARNTransitionAnimatorTests.swift; sourceTree = "<group>"; };
 		918B73271BAFDBC10030A449 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		918B73301BAFDC030030A449 /* TransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimator.swift; sourceTree = "<group>"; };
-		91A6C1F61D4755E4008F3A22 /* Animator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Animator.swift; sourceTree = "<group>"; };
-		91A6C1F81D4758A9008F3A22 /* InteractiveAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveAnimator.swift; sourceTree = "<group>"; };
-		91FACB4D1D45FC620095FFDC /* TransitionContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionContext.swift; sourceTree = "<group>"; };
+		918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARNTransitionAnimator.swift; sourceTree = "<group>"; };
+		91A6C1F61D4755E4008F3A22 /* TransitionAnimatable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionAnimatable.swift; sourceTree = "<group>"; };
+		91A6C1F81D4758A9008F3A22 /* InteractiveTransitioning.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveTransitioning.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,10 +84,12 @@
 			isa = PBXGroup;
 			children = (
 				918B73191BAFDBBC0030A449 /* ARNTransitionAnimator.h */,
-				918B73301BAFDC030030A449 /* TransitionAnimator.swift */,
-				91FACB4D1D45FC620095FFDC /* TransitionContext.swift */,
-				91A6C1F61D4755E4008F3A22 /* Animator.swift */,
-				91A6C1F81D4758A9008F3A22 /* InteractiveAnimator.swift */,
+				918B73301BAFDC030030A449 /* ARNTransitionAnimator.swift */,
+				91A6C1F61D4755E4008F3A22 /* TransitionAnimatable.swift */,
+				912F4B1B1D6E950000B9F808 /* AnimatedTransitioning .swift */,
+				91A6C1F81D4758A9008F3A22 /* InteractiveTransitioning.swift */,
+				912F4B191D6E919F00B9F808 /* TransitionAnimator.swift */,
+				912F4B171D6E8F0100B9F808 /* TransitionGestureHandler.swift */,
 				918B731B1BAFDBBE0030A449 /* Info.plist */,
 			);
 			name = Source;
@@ -207,10 +213,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				91A6C1F71D4755E4008F3A22 /* Animator.swift in Sources */,
-				91A6C1F91D4758A9008F3A22 /* InteractiveAnimator.swift in Sources */,
-				91FACB4E1D45FC620095FFDC /* TransitionContext.swift in Sources */,
-				918B73311BAFDC030030A449 /* TransitionAnimator.swift in Sources */,
+				912F4B181D6E8F0100B9F808 /* TransitionGestureHandler.swift in Sources */,
+				91A6C1F71D4755E4008F3A22 /* TransitionAnimatable.swift in Sources */,
+				91A6C1F91D4758A9008F3A22 /* InteractiveTransitioning.swift in Sources */,
+				912F4B1C1D6E950000B9F808 /* AnimatedTransitioning .swift in Sources */,
+				918B73311BAFDC030030A449 /* ARNTransitionAnimator.swift in Sources */,
+				912F4B1A1D6E919F00B9F808 /* TransitionAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +278,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -312,7 +320,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -2,453 +2,74 @@
 //  TransitionAnimator.swift
 //  ARNTransitionAnimator
 //
-//  Created by xxxAIRINxxx on 2015/02/26.
-//  Copyright (c) 2015 xxxAIRINxxx. All rights reserved.
+//  Created by xxxAIRINxxx on 2016/07/25.
+//  Copyright © 2016 xxxAIRINxxx. All rights reserved.
 //
 
+import Foundation
 import UIKit
-import UIKit.UIGestureRecognizerSubclass
 
-public enum DirectionType {
-    case Top
-    case Bottom
-    case Left
-    case Right
-}
-
-public enum OperationType {
-    case None
-    case Push
-    case Pop
-    case Present
-    case Dismiss
-}
-
-public class TransitionAnimator<From: UIViewController, To: UIViewController> : UIPercentDrivenInteractiveTransition {
+final class TransitionAnimator {
     
-    // Animation Settings
+    let transitionType: TransitionType
+    let animation: TransitionAnimatable
     
-    public var usingSpringWithDamping : CGFloat = 1.0
-    public var transitionDuration : NSTimeInterval = 0.5
-    public var initialSpringVelocity : CGFloat = 0.1
-    public var useKeyframeAnimation : Bool = false
-    
-    // Interactive Transition Gesture
-    
-    public weak var gestureTargetView : UIView? {
-        willSet { self.unregisterPanGesture() }
-        didSet { self.registerPanGesture() }
+    init(transitionType: TransitionType, animation: TransitionAnimatable) {
+        self.transitionType = transitionType
+        self.animation = animation
     }
-    public var panCompletionThreshold : CGFloat = 100.0
-    public var direction : DirectionType = .Bottom
-    public var contentScrollView : UIScrollView?
-    public var interactiveType : OperationType = .None {
-        didSet {
-            if self.interactiveType == .None {
-                self.unregisterPanGesture()
-            } else {
-                self.registerPanGesture()
+    
+    func willAnimation(containerView: UIView?) {
+        self.animation.willAnimation(self.transitionType, containerView: containerView)
+        
+        if self.transitionType.isPresenting {
+            containerView?.addSubview(self.fromVC.view)
+            containerView?.addSubview(self.toVC.view)
+        } else {
+            containerView?.addSubview(self.toVC.view)
+            containerView?.addSubview(self.fromVC.view)
+        }
+        self.fromVC.view.setNeedsLayout()
+        self.fromVC.view.layoutIfNeeded()
+        self.toVC.view.setNeedsLayout()
+        self.toVC.view.layoutIfNeeded()
+    }
+    
+    func animate(duration: NSTimeInterval, animations: (Void -> Void), completion: ((Bool) -> Void)? = nil) {
+        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+        
+        UIView.animateWithDuration(duration,
+                                   delay: 0.0,
+                                   options: .CurveEaseOut,
+                                   animations: animations) { finished in
+                                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    completion?(finished)
+        }
+    }
+    
+    func updateAnimation(percentComplete: CGFloat) {
+        self.animation.updateAnimation(self.transitionType, percentComplete: percentComplete)
+    }
+    
+    func finishAnimation(didComplete: Bool) {
+        if didComplete {
+            if !self.transitionType.isPresenting {
+                self.fromVC.view.removeFromSuperview()
             }
-        }
-    }
-    
-    // Handlers
-    
-    public var presentationBeforeHandler : ((containerView: UIView, transitionContext: UIViewControllerContextTransitioning) ->())?
-    public var presentationAnimationHandler : ((containerView: UIView, percentComplete: CGFloat) ->())?
-    public var presentationCancelAnimationHandler : ((containerView: UIView) ->())?
-    public var presentationCompletionHandler : ((containerView: UIView, completeTransition: Bool) ->())?
-    
-    public var dismissalBeforeHandler : ((containerView: UIView, transitionContext: UIViewControllerContextTransitioning) ->())?
-    public var dismissalAnimationHandler : ((containerView: UIView, percentComplete: CGFloat) ->())?
-    public var dismissalCancelAnimationHandler : ((containerView: UIView) ->())?
-    public var dismissalCompletionHandler : ((containerView: UIView, completeTransition: Bool) ->())?
-    
-    // Private
-    
-    private weak var fromVC : From!
-    private weak var toVC : To!
-    
-    private(set) var operationType : OperationType
-    private(set) var isPresenting : Bool = true
-    private(set) var isTransitioning : Bool = false
-    
-    private var gesture : UIPanGestureRecognizer?
-    private var transitionContext : UIViewControllerContextTransitioning?
-    private var panLocationStart : CGFloat = 0.0
-    
-    deinit {
-        self.unregisterPanGesture()
-    }
-    
-    // MARK: - Constructor
-    
-    public init(operationType: OperationType, fromVC: From, toVC: To) {
-        self.operationType = operationType
-        self.fromVC = fromVC
-        self.toVC = toVC
-        
-        switch self.operationType {
-        case .Push, .Present:
-            self.isPresenting = true
-        case .Pop, .Dismiss:
-            self.isPresenting = false
-        case .None:
-            break
-        }
-        
-        super.init()
-    }
-    
-    // MARK: - Private Functions
-    
-    private func registerPanGesture() {
-        self.unregisterPanGesture()
-        
-        self.gesture = UIPanGestureRecognizer(target: self, action: #selector(self.handlePan(_:)))
-        self.gesture!.delegate = self
-        self.gesture!.maximumNumberOfTouches = 1
-        
-        if let _gestureTargetView = self.gestureTargetView {
-            _gestureTargetView.addGestureRecognizer(self.gesture!)
         } else {
-            switch self.interactiveType {
-            case .Push, .Present:
-                self.fromVC.view.addGestureRecognizer(self.gesture!)
-            case .Pop, .Dismiss:
-                self.toVC.view.addGestureRecognizer(self.gesture!)
-            case .None:
-                break
-            }
+            self.toVC.view.removeFromSuperview()
         }
+        self.animation.finishAnimation(self.transitionType, didComplete: didComplete)
     }
-    
-    private func unregisterPanGesture() {
-        guard let _gesture = self.gesture else { return }
-        _gesture.view?.removeGestureRecognizer(_gesture)
-        
-        _gesture.delegate = nil
-        self.gesture = nil
-    }
-    
-    private func fireBeforeHandler(containerView: UIView, transitionContext: UIViewControllerContextTransitioning) {
-        if self.isPresenting {
-            self.presentationBeforeHandler?(containerView: containerView, transitionContext: transitionContext)
-        } else {
-            self.dismissalBeforeHandler?(containerView: containerView, transitionContext: transitionContext)
-        }
-    }
-    
-    private func fireAnimationHandler(containerView: UIView, percentComplete: CGFloat) {
-        if self.isPresenting {
-            self.presentationAnimationHandler?(containerView: containerView, percentComplete: percentComplete)
-        } else {
-            self.dismissalAnimationHandler?(containerView: containerView, percentComplete: percentComplete)
-        }
-    }
-
-    private func fireCancelAnimationHandler(containerView: UIView) {
-        if self.isPresenting {
-            self.presentationCancelAnimationHandler?(containerView: containerView)
-        } else {
-            self.dismissalCancelAnimationHandler?(containerView: containerView)
-        }
-    }
-    
-    private func fireCompletionHandler(containerView: UIView, completeTransition: Bool) {
-        if self.isPresenting {
-            self.presentationCompletionHandler?(containerView: containerView, completeTransition: completeTransition)
-        } else {
-            self.dismissalCompletionHandler?(containerView: containerView, completeTransition: completeTransition)
-        }
-    }
-    
-    private func animateWithDuration(duration: NSTimeInterval, containerView: UIView, completeTransition: Bool, completion: (() -> Void)?) {
-        if !self.useKeyframeAnimation {
-            UIView.animateWithDuration(
-                duration,
-                delay: 0.0,
-                usingSpringWithDamping: self.usingSpringWithDamping,
-                initialSpringVelocity: self.initialSpringVelocity,
-                options: .CurveEaseOut,
-                animations: {
-                    if completeTransition {
-                        self.fireAnimationHandler(containerView, percentComplete: 1.0)
-                    } else {
-                        self.fireCancelAnimationHandler(containerView)
-                    }
-                }, completion: { finished in
-                    self.fireCompletionHandler(containerView, completeTransition: completeTransition)
-                    completion?()
-            })
-        } else {
-            UIView.animateKeyframesWithDuration(
-                duration,
-                delay: 0.0,
-                options: .BeginFromCurrentState,
-                animations: {
-                    if completeTransition {
-                        self.fireAnimationHandler(containerView, percentComplete: 1.0)
-                    } else {
-                        self.fireCancelAnimationHandler(containerView)
-                    }
-                }, completion: { finished in
-                    self.fireCompletionHandler(containerView, completeTransition: completeTransition)
-                    completion?()
-            })
-        }
-    }
-    
 }
-
-// MARK: - Interactive Transition Gesture
 
 extension TransitionAnimator {
     
-    internal func handlePan(recognizer: UIPanGestureRecognizer) {
-        let window : UIWindow?
-        switch self.interactiveType {
-        case .Push, .Present:
-            window = self.fromVC.view.window
-        case .Pop, .Dismiss:
-            window = self.toVC.view.window
-        case .None:
-            return
-        }
-        
-        var location = recognizer.locationInView(window)
-        location = CGPointApplyAffineTransform(location, CGAffineTransformInvert(recognizer.view!.transform))
-        var velocity = recognizer .velocityInView(window)
-        velocity = CGPointApplyAffineTransform(velocity, CGAffineTransformInvert(recognizer.view!.transform))
-        
-        if recognizer.state == .Began {
-            self.setPanStartPoint(location)
-            
-            if let c = self.contentScrollView where c.contentOffset.y <= 0.0 {
-                self.startGestureTransition()
-            } else {
-                self.startGestureTransition()
-            }
-        } else if recognizer.state == .Changed {
-            var bounds = CGRect.zero
-            switch self.interactiveType {
-            case .Push, .Present:
-                bounds = self.fromVC.view.bounds
-            case .Pop, .Dismiss:
-                bounds = self.toVC.view.bounds
-            case .None:
-                break
-            }
-            
-            var animationRatio: CGFloat = 0.0
-            switch self.direction {
-            case .Top:
-                animationRatio = (self.panLocationStart - location.y) / bounds.height
-            case .Bottom:
-                animationRatio = (location.y - self.panLocationStart) / bounds.height
-            case .Left:
-                animationRatio = (self.panLocationStart - location.x) / bounds.width
-            case .Right:
-                animationRatio = (location.x - self.panLocationStart) / bounds.width
-            }
-            
-            if let _contentScrollView = self.contentScrollView {
-                if self.isTransitioning == false && _contentScrollView.contentOffset.y <= 0 {
-                    self.setPanStartPoint(location)
-                    self.startGestureTransition()
-                } else {
-                    self.updateInteractiveTransition(animationRatio)
-                }
-            } else {
-                self.updateInteractiveTransition(animationRatio)
-            }
-        } else if recognizer.state == .Ended {
-            var velocityForSelectedDirection: CGFloat = 0.0
-            switch self.direction {
-            case .Top, .Bottom:
-                velocityForSelectedDirection = velocity.y
-            case .Left, .Right:
-                velocityForSelectedDirection = velocity.x
-            }
-            
-            if velocityForSelectedDirection > self.panCompletionThreshold && (self.direction == .Right || self.direction == .Bottom) {
-                self.finishInteractiveTransitionAnimated(true)
-            } else if velocityForSelectedDirection < -self.panCompletionThreshold && (self.direction == .Left || self.direction == .Top) {
-                self.finishInteractiveTransitionAnimated(true)
-            } else {
-                let animated = self.contentScrollView?.contentOffset.y <= 0
-                self.cancelInteractiveTransitionAnimated(animated)
-            }
-            self.resetGestureTransitionSetting()
-        } else {
-            self.resetGestureTransitionSetting()
-            if self.isTransitioning {
-                self.cancelInteractiveTransitionAnimated(true)
-            }
-        }
+    var fromVC: UIViewController! {
+        return self.transitionType.isPresenting ? self.animation.sourceVC : self.animation.destVC
     }
     
-    private func startGestureTransition() {
-        if self.isTransitioning == false {
-            self.isTransitioning = true
-            switch (self.interactiveType) {
-            case .Push:
-                self.fromVC.navigationController?.pushViewController(self.toVC, animated: true)
-            case .Present:
-                self.fromVC.presentViewController(self.toVC, animated: true, completion: nil)
-            case .Pop:
-                self.toVC.navigationController?.popViewControllerAnimated(true)
-            case .Dismiss:
-                self.toVC.dismissViewControllerAnimated(true, completion: nil)
-            case .None:
-                break
-            }
-        }
-    }
-    
-    private func resetGestureTransitionSetting() {
-        self.isTransitioning = false
-    }
-    
-    private func setPanStartPoint(location: CGPoint) {
-        switch self.direction {
-        case .Top, .Bottom:
-            self.panLocationStart = location.y
-        case .Left, .Right:
-            self.panLocationStart = location.x
-        }
-    }
-}
-
-// MARK: - UIViewControllerAnimatedTransitioning
-
-extension TransitionAnimator: UIViewControllerAnimatedTransitioning {
-    
-    public func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
-        return self.transitionDuration
-    }
-    
-    public func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()
-        
-        self.transitionContext = transitionContext
-        self.fireBeforeHandler(containerView!, transitionContext: transitionContext)
-        
-        self.animateWithDuration(
-            self.transitionDuration(transitionContext),
-            containerView: containerView!,
-            completeTransition: true) {
-                transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
-        }
-    }
-    
-    @objc public func animationEnded(transitionCompleted: Bool) {
-        self.transitionContext = nil
-    }
-}
-
-// MARK: - UIViewControllerTransitioningDelegate
-
-extension TransitionAnimator: UIViewControllerTransitioningDelegate {
-    
-    @objc public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        self.isPresenting = true
-        return self
-    }
-    
-    public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        self.isPresenting = false
-        return self
-    }
-    
-    public func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        if self.gesture != nil && (self.interactiveType == .Push || self.interactiveType == .Present) {
-            self.isPresenting = true
-            return self
-        }
-        return nil
-    }
-    
-    public func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        if self.gesture != nil && (self.interactiveType == .Pop || self.interactiveType == .Dismiss) {
-            self.isPresenting = false
-            return self
-        }
-        return nil
-    }
-}
-
-// MARK: - UIViewControllerInteractiveTransitioning
-
-extension TransitionAnimator {
-    
-    public override func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
-        let containerView = transitionContext.containerView()
-        
-        // FIXME : UINavigationController not called animator UIViewControllerTransitioningDelegate
-        switch self.interactiveType {
-        case .Push, .Present:
-            self.isPresenting = true
-        case .Pop, .Dismiss:
-            self.isPresenting = false
-        case .None:
-            break
-        }
-        
-        self.transitionContext = transitionContext
-        self.fireBeforeHandler(containerView!, transitionContext: transitionContext)
-    }
-}
-
-// MARK: - UIPercentDrivenInteractiveTransition
-
-extension TransitionAnimator {
-    
-    public override func updateInteractiveTransition(percentComplete: CGFloat) {
-        super.updateInteractiveTransition(percentComplete)
-        if let transitionContext = self.transitionContext {
-            let containerView = transitionContext.containerView()
-            self.fireAnimationHandler(containerView!, percentComplete: percentComplete)
-        }
-    }
-    
-    public func finishInteractiveTransitionAnimated(animated: Bool) {
-        super.finishInteractiveTransition()
-        if let transitionContext = self.transitionContext {
-            let containerView = transitionContext.containerView()
-            self.animateWithDuration(
-                animated ? self.transitionDuration(transitionContext) : 0,
-                containerView: containerView!,
-                completeTransition: true) {
-                    transitionContext.completeTransition(true)
-            }
-        }
-    }
-    
-    public func cancelInteractiveTransitionAnimated(animated: Bool) {
-        super.cancelInteractiveTransition()
-        if let transitionContext = self.transitionContext {
-            let containerView = transitionContext.containerView()
-            self.animateWithDuration(
-                animated ? self.transitionDuration(transitionContext) : 0,
-                containerView: containerView!,
-                completeTransition: false) {
-                    transitionContext.completeTransition(false)
-            }
-        }
-    }
-}
-
-// MARK: - UIGestureRecognizerDelegate
-
-extension TransitionAnimator: UIGestureRecognizerDelegate {
-    
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return self.contentScrollView != nil ? true : false
-    }
-    
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer
-        otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return false
+    var toVC: UIViewController! {
+        return self.transitionType.isPresenting ? self.animation.destVC : self.animation.sourceVC
     }
 }
