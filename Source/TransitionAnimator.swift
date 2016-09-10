@@ -19,7 +19,7 @@ final class TransitionAnimator {
         self.animation = animation
     }
     
-    func willAnimation(containerView: UIView?) {
+    func willAnimation(_ containerView: UIView?) {
         self.animation.willAnimation(self.transitionType, containerView: containerView)
         
         if self.transitionType.isPresenting {
@@ -35,23 +35,23 @@ final class TransitionAnimator {
         self.toVC.view.layoutIfNeeded()
     }
     
-    func animate(duration: NSTimeInterval, animations: (Void -> Void), completion: ((Bool) -> Void)? = nil) {
-        UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+    func animate(_ duration: TimeInterval, animations: @escaping ((Void) -> Void), completion: ((Bool) -> Void)? = nil) {
+        UIApplication.shared.beginIgnoringInteractionEvents()
         
-        UIView.animateWithDuration(duration,
+        UIView.animate(withDuration: duration,
                                    delay: 0.0,
-                                   options: .CurveEaseOut,
+                                   options: .curveEaseOut,
                                    animations: animations) { finished in
-                                    UIApplication.sharedApplication().endIgnoringInteractionEvents()
+                                    UIApplication.shared.endIgnoringInteractionEvents()
                                     completion?(finished)
         }
     }
     
-    func updateAnimation(percentComplete: CGFloat) {
+    func updateAnimation(_ percentComplete: CGFloat) {
         self.animation.updateAnimation(self.transitionType, percentComplete: percentComplete)
     }
     
-    func finishAnimation(didComplete: Bool) {
+    func finishAnimation(_ didComplete: Bool) {
         if didComplete {
             if !self.transitionType.isPresenting {
                 self.fromVC.view.removeFromSuperview()

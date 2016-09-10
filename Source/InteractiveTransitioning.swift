@@ -14,7 +14,7 @@ final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
     let gestureHandler: TransitionGestureHandler
     let _duration: CGFloat
     
-    private var transitionContext: UIViewControllerContextTransitioning?
+    fileprivate var transitionContext: UIViewControllerContextTransitioning?
     
     init(duration: CGFloat, animator: TransitionAnimator, _ gestureHandler: TransitionGestureHandler) {
         self._duration = duration
@@ -26,70 +26,70 @@ final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
         self.handleGesture()
     }
     
-    private func handleGesture() {
+    fileprivate func handleGesture() {
         self.gestureHandler.updateGestureHandler = { [weak self] state in
             switch state {
-            case .Start:
+            case .start:
                 self?.startTransition()
-            case .Update(let percentComplete):
-                self?.updateInteractiveTransition(percentComplete)
-            case .Finish:
-                self?.finishInteractiveTransition()
-            case .Cancel:
-                self?.cancelInteractiveTransition()
+            case .update(let percentComplete):
+                self?.update(percentComplete)
+            case .finish:
+                self?.finish()
+            case .cancel:
+                self?.cancel()
             }
         }
     }
     
-    private func completeTransition(didComplete: Bool) {
+    fileprivate func completeTransition(_ didComplete: Bool) {
         self.transitionContext?.completeTransition(didComplete)
         self.transitionContext = nil
     }
     
-    private func startTransition() {
+    fileprivate func startTransition() {
         switch self.animator.transitionType {
-        case .Push:
+        case .push:
             self.animator.fromVC.navigationController?.pushViewController(self.animator.toVC, animated: true)
-        case .Present:
-            self.animator.fromVC.presentViewController(self.animator.toVC, animated: true, completion: nil)
-        case .Pop:
-            self.animator.fromVC.navigationController?.popViewControllerAnimated(true)
-        case .Dismiss:
-            self.animator.fromVC.dismissViewControllerAnimated(true, completion: nil)
+        case .present:
+            self.animator.fromVC.present(self.animator.toVC, animated: true, completion: nil)
+        case .pop:
+            _ = self.animator.fromVC.navigationController?.popViewController(animated: true)
+        case .dismiss:
+            self.animator.fromVC.dismiss(animated: true, completion: nil)
         }
     }
 }
 
 extension InteractiveTransitioning {
     
-    override func startInteractiveTransition(transitionContext: UIViewControllerContextTransitioning) {
+    override func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning) {
         self.transitionContext = transitionContext
-        self.animator.willAnimation(transitionContext.containerView())
+        self.animator.willAnimation(transitionContext.containerView)
     }
     
-    override func updateInteractiveTransition(percentComplete: CGFloat) {
-        super.updateInteractiveTransition(percentComplete)
+    override func update(_ percentComplete: CGFloat) {
+        super.update(percentComplete)
         
         self.animator.updateAnimation(percentComplete)
     }
     
-    override func finishInteractiveTransition() {
-        super.finishInteractiveTransition()
+    override func finish() {
+        super.finish()
         
         let d = self._duration - (self._duration * self.percentComplete)
         
-        self.animator.animate(NSTimeInterval(d), animations: { self.animator.updateAnimation(1.0) }) { finished in
+        self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(1.0) }) { finished in
             self.animator.finishAnimation(true)
             self.completeTransition(true)
         }
     }
     
-    override func cancelInteractiveTransition() {
-        super.cancelInteractiveTransition()
+    override func cancel() {
+        super.cancel()
         
         let d = self._duration * (1.0 - self.percentComplete)
         
-        self.animator.animate(NSTimeInterval(d), animations: { self.animator.updateAnimation(0.0) }) { finished in
+        self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(0.0) }) { finished in
             self.animator.finishAnimation(false)
             self.completeTransition(false)
         }

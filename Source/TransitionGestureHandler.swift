@@ -11,35 +11,35 @@ import UIKit
 import UIKit.UIGestureRecognizerSubclass
 
 public enum DirectionType {
-    case Top
-    case Bottom
-    case Left
-    case Right
+    case top
+    case bottom
+    case left
+    case right
 }
 
 public enum TransitionState {
-    case Start
-    case Update(percentComplete: CGFloat)
-    case Finish
-    case Cancel
+    case start
+    case update(percentComplete: CGFloat)
+    case finish
+    case cancel
 }
 
 public final class TransitionGestureHandler : NSObject {
     
     public let direction: DirectionType
     
-    public var updateGestureHandler: (TransitionState -> Void)?
+    public var updateGestureHandler: ((TransitionState) -> Void)?
     
     public var panStartThreshold: CGFloat = 10.0
     public var panCompletionThreshold: CGFloat = 30.0
     
-    private(set) var isTransitioning: Bool = false
-    private(set) var percentComplete: CGFloat = 0.0
+    fileprivate(set) var isTransitioning: Bool = false
+    fileprivate(set) var percentComplete: CGFloat = 0.0
     
-    private weak var targetVC: UIViewController!
+    fileprivate weak var targetVC: UIViewController!
     
-    private var panLocationStart: CGFloat = 0.0
-    private var gesture: UIPanGestureRecognizer?
+    fileprivate var panLocationStart: CGFloat = 0.0
+    fileprivate var gesture: UIPanGestureRecognizer?
     
     deinit {
         self.unregisterGesture()
@@ -52,7 +52,7 @@ public final class TransitionGestureHandler : NSObject {
         super.init()
     }
     
-    public func registerGesture(view: UIView) {
+    public func registerGesture(_ view: UIView) {
         self.unregisterGesture()
         
         self.gesture = UIPanGestureRecognizer(target: self, action: #selector(handleGesture(_:)))
@@ -67,87 +67,87 @@ public final class TransitionGestureHandler : NSObject {
         self.gesture = nil
     }
     
-    @objc private func handleGesture(recognizer: UIPanGestureRecognizer) {
+    @objc fileprivate func handleGesture(_ recognizer: UIPanGestureRecognizer) {
         let window = self.targetVC.view.window
         
-        var location = recognizer.locationInView(window)
-        location = CGPointApplyAffineTransform(location, CGAffineTransformInvert(recognizer.view!.transform))
-        var velocity = recognizer .velocityInView(window)
-        velocity = CGPointApplyAffineTransform(velocity, CGAffineTransformInvert(recognizer.view!.transform))
+        var location = recognizer.location(in: window)
+        location = location.applying(recognizer.view!.transform.inverted())
+        var velocity = recognizer .velocity(in: window)
+        velocity = velocity.applying(recognizer.view!.transform.inverted())
         
         self.updatePercentComplete(location)
         
         switch recognizer.state {
-        case .Began:
+        case .began:
             self.setPanStartPoint(location)
-        case .Changed:
+        case .changed:
             self.startTransitionIfNeeded(location)
             
             if self.isTransitioning {
-                self.updateGestureHandler?(.Update(percentComplete: self.percentComplete))
+                self.updateGestureHandler?(.update(percentComplete: self.percentComplete))
             }
-        case .Ended:
+        case .ended:
             var velocityForSelectedDirection: CGFloat = 0.0
             switch self.direction {
-            case .Top, .Bottom:
+            case .top, .bottom:
                 velocityForSelectedDirection = velocity.y
-            case .Left, .Right:
+            case .left, .right:
                 velocityForSelectedDirection = velocity.x
             }
             
             if velocityForSelectedDirection > 0.0 && (location.x - self.panLocationStart) > self.panCompletionThreshold {
-                self.updateGestureHandler?(.Finish)
+                self.updateGestureHandler?(.finish)
                 self.percentComplete = 1.0
             } else {
-                self.updateGestureHandler?(.Cancel)
+                self.updateGestureHandler?(.cancel)
                 self.percentComplete = 0.0
             }
             self.isTransitioning = false
         default:
-            self.updateGestureHandler?(.Cancel)
+            self.updateGestureHandler?(.cancel)
             self.isTransitioning = false
             self.percentComplete = 0.0
         }
     }
     
-    private func setPanStartPoint(location: CGPoint) {
+    fileprivate func setPanStartPoint(_ location: CGPoint) {
         switch self.direction {
-        case .Top, .Bottom:
+        case .top, .bottom:
             self.panLocationStart = location.y
-        case .Left, .Right:
+        case .left, .right:
             self.panLocationStart = location.x
         }
     }
     
-    private func updatePercentComplete(location: CGPoint) {
+    fileprivate func updatePercentComplete(_ location: CGPoint) {
         let bounds = self.targetVC.view.bounds
         switch self.direction {
-        case .Top:
+        case .top:
             self.percentComplete = (self.panLocationStart - location.y) / bounds.height
-        case .Bottom:
+        case .bottom:
             self.percentComplete = (location.y - self.panLocationStart) / bounds.height
-        case .Left:
+        case .left:
             self.percentComplete = (self.panLocationStart - location.x) / bounds.width
-        case .Right:
+        case .right:
             self.percentComplete = (location.x - self.panLocationStart) / bounds.width
         }
     }
     
-    private func startTransitionIfNeeded(location: CGPoint) {
+    fileprivate func startTransitionIfNeeded(_ location: CGPoint) {
         if self.isTransitioning { return }
         
         switch self.direction {
-        case .Top:
+        case .top:
             if (self.panLocationStart - location.y) < self.panStartThreshold { return }
-        case .Bottom:
+        case .bottom:
             if (location.y - self.panLocationStart) < self.panStartThreshold { return }
-        case .Left:
+        case .left:
             if (self.panLocationStart - location.x) < self.panStartThreshold { return }
-        case .Right:
+        case .right:
             if (location.x - self.panLocationStart) < self.panStartThreshold { return }
         }
         self.isTransitioning = true
-        self.updateGestureHandler?(.Start)
+        self.updateGestureHandler?(.start)
         self.setPanStartPoint(location)
         self.updatePercentComplete(location)
     }
@@ -157,13 +157,13 @@ public final class TransitionGestureHandler : NSObject {
 
 extension TransitionGestureHandler : UIGestureRecognizerDelegate {
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         guard let g = self.gesture else { return false }
         guard g.view is UIScrollView else { return false }
         return true
     }
     
-    public func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailByGestureRecognizer
+    public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy
         otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return false
     }

@@ -10,31 +10,31 @@ import Foundation
 import UIKit
 
 public enum TransitionType {
-    case Push
-    case Pop
-    case Present
-    case Dismiss
+    case push
+    case pop
+    case present
+    case dismiss
     
     public var isPresenting: Bool {
-        return self == .Push || self == .Present
+        return self == .push || self == .present
     }
 }
 
 public final class ARNTransitionAnimator : NSObject {
     
-    public let duration: NSTimeInterval
+    public let duration: TimeInterval
     public let animation: TransitionAnimatable
     
-    private var interactiveTransitioning: InteractiveTransitioning?
+    fileprivate var interactiveTransitioning: InteractiveTransitioning?
     
-    public init(duration: NSTimeInterval, animation: TransitionAnimatable) {
+    public init(duration: TimeInterval, animation: TransitionAnimatable) {
         self.duration = duration
         self.animation = animation
         
         super.init()
     }
     
-    public func registerInteractiveTransitioning(transitionType: TransitionType, gestureHandler: TransitionGestureHandler) {
+    public func registerInteractiveTransitioning(_ transitionType: TransitionType, gestureHandler: TransitionGestureHandler) {
         let d = CGFloat(self.duration)
         let animator = TransitionAnimator(transitionType: transitionType, animation: animation)
         self.interactiveTransitioning = InteractiveTransitioning(duration: d, animator: animator, gestureHandler)
@@ -47,23 +47,23 @@ public final class ARNTransitionAnimator : NSObject {
 
 extension ARNTransitionAnimator : UIViewControllerTransitioningDelegate {
     
-    public func animationControllerForPresentedController(presented: UIViewController, presentingController presenting: UIViewController, sourceController source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = TransitionAnimator(transitionType: .Present, animation: self.animation)
+    public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = TransitionAnimator(transitionType: .present, animation: self.animation)
         return AnimatedTransitioning(animator: animator, duration: self.duration)
     }
     
-    public func animationControllerForDismissedController(dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        let animator = TransitionAnimator(transitionType: .Dismiss, animation: self.animation)
+    public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        let animator = TransitionAnimator(transitionType: .dismiss, animation: self.animation)
         return AnimatedTransitioning(animator: animator, duration: self.duration)
     }
     
-    public func interactionControllerForPresentation(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        guard let i = self.interactiveTransitioning where i.animator.transitionType.isPresenting else { return nil }
+    public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        guard let i = self.interactiveTransitioning , i.animator.transitionType.isPresenting else { return nil }
         return i
     }
     
-    public func interactionControllerForDismissal(animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        guard let i = self.interactiveTransitioning where !i.animator.transitionType.isPresenting else { return nil }
+    public func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        guard let i = self.interactiveTransitioning , !i.animator.transitionType.isPresenting else { return nil }
         if !i.gestureHandler.isTransitioning { return nil }
         return i
     }

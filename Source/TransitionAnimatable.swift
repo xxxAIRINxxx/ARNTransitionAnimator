@@ -14,9 +14,9 @@ public protocol TransitionAnimatable : class {
     weak var sourceVC: UIViewController! { get }
     weak var destVC: UIViewController! { get }
     
-    func willAnimation(transitionType: TransitionType, containerView: UIView?)
-    func updateAnimation(transitionType: TransitionType, percentComplete: CGFloat)
-    func finishAnimation(transitionType: TransitionType, didComplete: Bool)
+    func willAnimation(_ transitionType: TransitionType, containerView: UIView?)
+    func updateAnimation(_ transitionType: TransitionType, percentComplete: CGFloat)
+    func finishAnimation(_ transitionType: TransitionType, didComplete: Bool)
     
 }
 

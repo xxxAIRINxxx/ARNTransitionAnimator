@@ -11,9 +11,9 @@ import Foundation
 final class AnimatedTransitioning : NSObject {
     
     let animator: TransitionAnimator
-    let duration: NSTimeInterval
+    let duration: TimeInterval
     
-    init(animator: TransitionAnimator, duration: NSTimeInterval) {
+    init(animator: TransitionAnimator, duration: TimeInterval) {
         self.animator = animator
         self.duration = duration
         
@@ -23,12 +23,12 @@ final class AnimatedTransitioning : NSObject {
 
 extension AnimatedTransitioning : UIViewControllerAnimatedTransitioning {
     
-    func transitionDuration(transitionContext: UIViewControllerContextTransitioning?) -> NSTimeInterval {
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return self.duration
     }
     
-    func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
-        self.animator.willAnimation(transitionContext.containerView())
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        self.animator.willAnimation(transitionContext.containerView)
         
         self.animator.animate(self.duration, animations: { self.animator.updateAnimation(1.0) }) { finished in
             self.animator.finishAnimation(true)
