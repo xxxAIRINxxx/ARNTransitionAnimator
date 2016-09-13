@@ -19,20 +19,20 @@ final class TransitionAnimator {
         self.animation = animation
     }
     
-    func willAnimation(_ containerView: UIView?) {
-        self.animation.willAnimation(self.transitionType, containerView: containerView)
-        
+    func willAnimation(_ containerView: UIView) {
         if self.transitionType.isPresenting {
-            containerView?.addSubview(self.fromVC.view)
-            containerView?.addSubview(self.toVC.view)
+            containerView.addSubview(self.fromVC.view)
+            containerView.addSubview(self.toVC.view)
         } else {
-            containerView?.addSubview(self.toVC.view)
-            containerView?.addSubview(self.fromVC.view)
+            containerView.addSubview(self.toVC.view)
+            containerView.addSubview(self.fromVC.view)
         }
         self.fromVC.view.setNeedsLayout()
         self.fromVC.view.layoutIfNeeded()
         self.toVC.view.setNeedsLayout()
         self.toVC.view.layoutIfNeeded()
+        
+        self.animation.willAnimation(self.transitionType, containerView: containerView)
     }
     
     func animate(_ duration: TimeInterval, animations: @escaping ((Void) -> Void), completion: ((Bool) -> Void)? = nil) {
