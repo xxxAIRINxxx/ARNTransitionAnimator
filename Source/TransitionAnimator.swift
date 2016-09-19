@@ -65,11 +65,11 @@ final class TransitionAnimator {
 
 extension TransitionAnimator {
     
-    var fromVC: UIViewController! {
-        return self.transitionType.isPresenting ? self.animation.sourceVC : self.animation.destVC
+    var fromVC: UIViewController {
+        return self.transitionType.isPresenting ? self.animation.sourceVC() : self.animation.destVC()
     }
     
-    var toVC: UIViewController! {
-        return self.transitionType.isPresenting ? self.animation.destVC : self.animation.sourceVC
+    var toVC: UIViewController {
+        return self.transitionType.isPresenting ? self.animation.destVC() : self.animation.sourceVC()
     }
 }
