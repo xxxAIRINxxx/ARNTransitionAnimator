@@ -39,11 +39,13 @@ final class TransitionAnimator {
         UIApplication.shared.beginIgnoringInteractionEvents()
         
         UIView.animate(withDuration: duration,
-                                   delay: 0.0,
-                                   options: .curveEaseOut,
-                                   animations: animations) { finished in
-                                    UIApplication.shared.endIgnoringInteractionEvents()
-                                    completion?(finished)
+                       delay: 0.0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 0,
+                       options: .curveEaseOut,
+                       animations: animations) { finished in
+                        UIApplication.shared.endIgnoringInteractionEvents()
+                        completion?(finished)
         }
     }
     
