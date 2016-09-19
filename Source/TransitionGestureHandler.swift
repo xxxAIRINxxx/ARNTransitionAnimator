@@ -95,7 +95,7 @@ public final class TransitionGestureHandler : NSObject {
                 velocityForSelectedDirection = velocity.x
             }
             
-            if velocityForSelectedDirection > 0.0 && (location.x - self.panLocationStart) > self.panCompletionThreshold {
+            if velocityForSelectedDirection > 0.0 && (self.percentComplete * 100) > self.panCompletionThreshold {
                 self.updateGestureHandler?(.finish)
                 self.percentComplete = 1.0
             } else {

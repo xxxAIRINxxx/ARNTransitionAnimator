@@ -59,6 +59,7 @@ extension ARNTransitionAnimator : UIViewControllerTransitioningDelegate {
     
     public func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
         guard let i = self.interactiveTransitioning , i.animator.transitionType.isPresenting else { return nil }
+        if !i.gestureHandler.isTransitioning { return nil }
         return i
     }
     
