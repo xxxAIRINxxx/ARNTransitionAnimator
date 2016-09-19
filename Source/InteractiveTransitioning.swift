@@ -12,12 +12,12 @@ final class InteractiveTransitioning : UIPercentDrivenInteractiveTransition {
     
     let animator: TransitionAnimator
     let gestureHandler: TransitionGestureHandler
-    let _duration: CGFloat
+    let transitionDuration: CGFloat
     
     fileprivate var transitionContext: UIViewControllerContextTransitioning?
     
     init(duration: CGFloat, animator: TransitionAnimator, _ gestureHandler: TransitionGestureHandler) {
-        self._duration = duration
+        self.transitionDuration = duration
         self.animator = animator
         self.gestureHandler = gestureHandler
         
@@ -76,7 +76,7 @@ extension InteractiveTransitioning {
     override func finish() {
         super.finish()
         
-        let d = self._duration - (self._duration * self.percentComplete)
+        let d = self.transitionDuration - (self.transitionDuration * self.percentComplete)
         
         self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(1.0) }) { finished in
             self.animator.finishAnimation(true)
@@ -87,7 +87,7 @@ extension InteractiveTransitioning {
     override func cancel() {
         super.cancel()
         
-        let d = self._duration * (1.0 - self.percentComplete)
+        let d = self.transitionDuration * (1.0 - self.percentComplete)
         
         self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(0.0) }) { finished in
             self.animator.finishAnimation(false)
