@@ -30,8 +30,8 @@ extension AnimatedTransitioning : UIViewControllerAnimatedTransitioning {
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         self.animator.willAnimation(transitionContext.containerView)
         
-        self.animator.animate(self.duration, animations: { self.animator.updateAnimation(1.0) }) { finished in
-            self.animator.finishAnimation(true)
+        self.animator.animate(self.duration, animations: { [weak self] in self?.animator.updateAnimation(1.0) }) { [weak self] finished in
+            self?.animator.finishAnimation(true)
             transitionContext.completeTransition(true)
         }
     }

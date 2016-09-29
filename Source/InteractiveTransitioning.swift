@@ -78,9 +78,9 @@ extension InteractiveTransitioning {
         
         let d = self.transitionDuration - (self.transitionDuration * self.percentComplete)
         
-        self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(1.0) }) { finished in
-            self.animator.finishAnimation(true)
-            self.completeTransition(true)
+        self.animator.animate(TimeInterval(d), animations: { [weak self] in self?.animator.updateAnimation(1.0) }) { [weak self] finished in
+            self?.animator.finishAnimation(true)
+            self?.completeTransition(true)
         }
     }
     
@@ -89,9 +89,9 @@ extension InteractiveTransitioning {
         
         let d = self.transitionDuration * (1.0 - self.percentComplete)
         
-        self.animator.animate(TimeInterval(d), animations: { self.animator.updateAnimation(0.0) }) { finished in
-            self.animator.finishAnimation(false)
-            self.completeTransition(false)
+        self.animator.animate(TimeInterval(d), animations: { [weak self] in self?.animator.updateAnimation(0.0) }) { [weak self] finished in
+            self?.animator.finishAnimation(false)
+            self?.completeTransition(false)
         }
     }
 }
