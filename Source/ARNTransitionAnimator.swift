@@ -18,6 +18,10 @@ public enum TransitionType {
     public var isPresenting: Bool {
         return self == .push || self == .present
     }
+    
+    public var isDismissing: Bool {
+        return self == .pop || self == .dismiss
+    }
 }
 
 public final class ARNTransitionAnimator : NSObject {

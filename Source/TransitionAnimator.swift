@@ -20,18 +20,7 @@ final class TransitionAnimator {
     }
     
     func willAnimation(_ containerView: UIView) {
-        if self.transitionType.isPresenting {
-            containerView.addSubview(self.fromVC.view)
-            containerView.addSubview(self.toVC.view)
-        } else {
-            containerView.addSubview(self.toVC.view)
-            containerView.addSubview(self.fromVC.view)
-        }
-        self.fromVC.view.setNeedsLayout()
-        self.fromVC.view.layoutIfNeeded()
-        self.toVC.view.setNeedsLayout()
-        self.toVC.view.layoutIfNeeded()
-        
+        self.animation.prepareContainer(self.transitionType, containerView: containerView, from: self.fromVC, to: self.toVC)
         self.animation.willAnimation(self.transitionType, containerView: containerView)
     }
     
