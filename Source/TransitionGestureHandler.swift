@@ -90,9 +90,9 @@ public final class TransitionGestureHandler : NSObject {
             var velocityForSelectedDirection: CGFloat = 0.0
             switch self.direction {
             case .top, .bottom:
-                velocityForSelectedDirection = velocity.y
+                velocityForSelectedDirection = abs(velocity.y)
             case .left, .right:
-                velocityForSelectedDirection = velocity.x
+                velocityForSelectedDirection = abs(velocity.x)
             }
             
             if velocityForSelectedDirection > 0.0 && (self.percentComplete * 100) > self.panCompletionThreshold {
