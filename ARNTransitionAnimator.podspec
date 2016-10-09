@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "ARNTransitionAnimator"
-  s.version      = "2.0.1"
+  s.version      = "2.0.2"
   s.summary      = "Custom transition & interactive transition animator for iOS. written in Swift."
   s.homepage     = "https://github.com/xxxAIRINxxx/ARNTransitionAnimator"
   s.license      = 'MIT'
