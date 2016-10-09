@@ -28,7 +28,26 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "918B731F1BAFDBBE0030A449"
+               BuildableName = "ARNTransitionAnimatorTests.xctest"
+               BlueprintName = "ARNTransitionAnimatorTests"
+               ReferencedContainer = "container:ARNTransitionAnimator.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "918B73151BAFDBB90030A449"
+            BuildableName = "ARNTransitionAnimator.framework"
+            BlueprintName = "ARNTransitionAnimator"
+            ReferencedContainer = "container:ARNTransitionAnimator.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
