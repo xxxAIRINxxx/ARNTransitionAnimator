@@ -22,7 +22,7 @@ public protocol TransitionAnimatable : class {
 
 extension TransitionAnimatable {
     
-    func prepareContainer(_ transitionType: TransitionType, containerView: UIView, from fromVC: UIViewController, to toVC: UIViewController) {
+    public func prepareContainer(_ transitionType: TransitionType, containerView: UIView, from fromVC: UIViewController, to toVC: UIViewController) {
         if transitionType.isPresenting {
             containerView.addSubview(fromVC.view)
             containerView.addSubview(toVC.view)
