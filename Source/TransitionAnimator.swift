@@ -48,7 +48,9 @@ final class TransitionAnimator {
                 self.fromVC.view.removeFromSuperview()
             }
         } else {
-            self.toVC.view.removeFromSuperview()
+            if self.transitionType.isPresenting {
+                self.toVC.view.removeFromSuperview()
+            }
         }
         self.animation.finishAnimation(self.transitionType, didComplete: didComplete)
     }
