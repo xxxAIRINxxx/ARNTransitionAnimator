@@ -1,6 +1,6 @@
 # ARNTransitionAnimator
 
-[![Swift 3.1](https://img.shields.io/badge/Swift-3.1-orange.svg?style=flat)](https://developer.apple.com/swift/)
+[![Swift 3.0](https://img.shields.io/badge/Swift-3.0-orange.svg?style=flat)](https://developer.apple.com/swift/)
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
 [![Xcode 8.2+](https://img.shields.io/badge/Xcode-8.2+-blue.svg?style=flat)](https://developer.apple.com/swift/)
 
@@ -10,14 +10,14 @@ Custom transition & interactive transition animator for iOS. written in Swift.
 
 * Xcode 8.2+
 * iOS 8.0+
-* Swift 3.1
+* Swift 3.0
 
 ## Versions
 
 | Tag         | Tag        | OS             | Swift         |
 |-------------|------------|----------------|---------------|
 | Old Version | v1.2.0     | iOS 8+         | 3.0           |
-| New Version | v2.0.x     | iOS 8+         | 3.1           |
+| New Version | v2.0.x     | iOS 8+         | 3.0           |
 
 ## Installation
 
