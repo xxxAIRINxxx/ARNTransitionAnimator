@@ -32,6 +32,7 @@ public final class TransitionGestureHandler : NSObject {
     
     public var panStartThreshold: CGFloat = 10.0
     public var panCompletionThreshold: CGFloat = 30.0
+    public var panBoundsPoint: CGPoint?
     
     fileprivate(set) var isTransitioning: Bool = false
     fileprivate(set) var percentComplete: CGFloat = 0.0
@@ -120,16 +121,31 @@ public final class TransitionGestureHandler : NSObject {
     }
     
     fileprivate func updatePercentComplete(_ location: CGPoint) {
-        let bounds = self.targetVC.view.bounds
+        var bounds = CGFloat(0)
+        if let boundsPoint = panBoundsPoint {
+            switch self.direction {
+            case .top, .bottom:
+                bounds = abs(boundsPoint.y - panLocationStart)
+            case .left, .right:
+                bounds = abs(boundsPoint.x - panLocationStart)
+            }
+        } else {
+            switch self.direction {
+            case .top, .bottom:
+                bounds = self.targetVC.view.bounds.height
+            case .left, .right:
+                bounds = self.targetVC.view.bounds.width
+            }
+        }
         switch self.direction {
         case .top:
-            self.percentComplete = (self.panLocationStart - location.y) / bounds.height
+            self.percentComplete = min((self.panLocationStart - location.y) / bounds, 1)
         case .bottom:
-            self.percentComplete = (location.y - self.panLocationStart) / bounds.height
+            self.percentComplete = min((location.y - self.panLocationStart) / bounds, 1)
         case .left:
-            self.percentComplete = (self.panLocationStart - location.x) / bounds.width
+            self.percentComplete = min((self.panLocationStart - location.x) / bounds, 1)
         case .right:
-            self.percentComplete = (location.x - self.panLocationStart) / bounds.width
+            self.percentComplete = min((location.x - self.panLocationStart) / bounds, 1)
         }
     }
     
