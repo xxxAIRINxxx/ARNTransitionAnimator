@@ -4,7 +4,7 @@
 [![Platforms iOS](https://img.shields.io/badge/Platforms-iOS-lightgray.svg?style=flat)](https://developer.apple.com/swift/)
 [![Xcode 8.2+](https://img.shields.io/badge/Xcode-8.2+-blue.svg?style=flat)](https://developer.apple.com/swift/)
 
-Custom transition & interactive transition animator for iOS. written in Swift.
+Custom transition & interactive transition animator for iOS. written in Swift.(Objective-C [MMTransitionAnimator](https://github.com/mojun/MMTransitionAnimator))
 
 ## Requirements
 
