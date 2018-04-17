@@ -223,6 +223,7 @@ public final class TransitionGestureHandler : NSObject {
         }
         self.isTransitioning = true
         self.updateGestureHandler?(.start)
+        self.setPanStartPoint(location)
         self.updatePercentComplete(location)
     }
 }
