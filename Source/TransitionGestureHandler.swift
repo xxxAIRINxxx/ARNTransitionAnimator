@@ -181,7 +181,7 @@ public final class TransitionGestureHandler : NSObject {
     }
     
     fileprivate func updatePercentComplete(_ location: CGPoint) {
-        var bounds = CGFloat(0)
+        var bounds: CGFloat = 0.0
         if let boundsPoint = panBoundsPoint {
             switch self.direction {
             case .top, .bottom:
