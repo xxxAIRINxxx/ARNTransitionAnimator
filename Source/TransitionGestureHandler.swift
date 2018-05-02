@@ -32,6 +32,7 @@ public final class TransitionGestureHandler : NSObject {
     
     public var panStartThreshold: CGFloat = 10.0
     public var panCompletionThreshold: CGFloat = 30.0
+    public var velocityThreshold: CGFloat = 0.0
     public var panBoundsPoint: CGPoint?
     
     fileprivate let targetView: UIView
@@ -125,7 +126,7 @@ public final class TransitionGestureHandler : NSObject {
                 velocityForSelectedDirection = velocity.x
             }
             
-            if velocityForSelectedDirection > 0.0 && (self.percentComplete * 100) > self.panCompletionThreshold {
+            if velocityForSelectedDirection > self.velocityThreshold && (self.percentComplete * 100) > self.panCompletionThreshold {
                 self.updateGestureHandler?(.finish)
             } else {
                 self.updateGestureHandler?(.cancel)
