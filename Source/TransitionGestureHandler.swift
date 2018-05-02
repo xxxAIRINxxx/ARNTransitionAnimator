@@ -216,11 +216,7 @@ public final class TransitionGestureHandler : NSObject {
         case .top:
             if (self.panLocationStart - location.y) < self.panStartThreshold { return }
         case .bottom:
-            if self.targetView is UIScrollView {
-                if (location.y - self.panLocationStart) < self.panStartThreshold { return }
-            } else {
-                if location.y > 0 { return }
-            }
+            if (location.y - self.panLocationStart) < self.panStartThreshold { return }
         case .left:
             if (self.panLocationStart - location.x) < self.panStartThreshold { return }
         case .right:
