@@ -115,9 +115,13 @@ public final class TransitionGestureHandler : NSObject {
             
             var velocityForSelectedDirection: CGFloat = 0.0
             switch self.direction {
-            case .top, .bottom:
+            case .top:
+                velocityForSelectedDirection = velocity.y * -1.0
+            case .bottom:
                 velocityForSelectedDirection = velocity.y
-            case .left, .right:
+            case .left:
+                velocityForSelectedDirection = velocity.x * -1.0
+            case .right:
                 velocityForSelectedDirection = velocity.x
             }
             
