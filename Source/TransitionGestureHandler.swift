@@ -132,10 +132,9 @@ public final class TransitionGestureHandler : NSObject {
             } else {
                 self.updateGestureHandler?(.cancel)
             }
-        case .cancelled:
-            if !self.isTransitioning { return }
-            self.updateGestureHandler?(.cancel)
-        default:
+        case .cancelled,
+             .failed,
+             .possible:
             if !self.isTransitioning { return }
             self.updateGestureHandler?(.cancel)
         }
@@ -229,6 +228,10 @@ public final class TransitionGestureHandler : NSObject {
         self.updateGestureHandler?(.start)
         self.setPanStartPoint(location)
         self.updatePercentComplete(location)
+    }
+
+    func finish() {
+        isTransitioning = false
     }
 }
 
